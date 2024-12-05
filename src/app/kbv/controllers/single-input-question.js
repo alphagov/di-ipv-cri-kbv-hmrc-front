@@ -6,11 +6,11 @@ const { submitAnswer, getNextQuestion } = require("../service");
 const fields = require("../fieldsHelper");
 const taxYearToRange = require("../../../utils/tax-year-to-range");
 
-class SingleAmountQuestionController extends BaseController {
+class SingleInputQuestionController extends BaseController {
   configure(req, res, next) {
     req.form.options.template = path.join(
       req.form.options.templatePath,
-      "single-amount-question"
+      "single-input-question"
     );
     super.configure(req, res, next);
   }
@@ -85,4 +85,4 @@ class SingleAmountQuestionController extends BaseController {
     });
   }
 }
-module.exports = SingleAmountQuestionController;
+module.exports = SingleInputQuestionController;

@@ -3,16 +3,16 @@ const { EnterTaxPayslipPage } = require("../pages");
 const { expect } = require("chai");
 
 Then("they should see the Enter Tax Payslip question page", async function () {
-  const singleAmountQuestionPage = new EnterTaxPayslipPage(this.page);
+  const singleInputQuestionPage = new EnterTaxPayslipPage(this.page);
 
-  expect(singleAmountQuestionPage.isCurrentPage()).to.be.true;
+  expect(singleInputQuestionPage.isCurrentPage()).to.be.true;
 });
 
 When(
   "they enter amount and continue from the Enter Tax Payslip question page",
   async function () {
-    const singleAmountQuestionPage = new EnterTaxPayslipPage(this.page);
-    await singleAmountQuestionPage.answer();
-    await singleAmountQuestionPage.continue();
+    const singleInputQuestionPage = new EnterTaxPayslipPage(this.page);
+    await singleInputQuestionPage.answer();
+    await singleInputQuestionPage.continue();
   }
 );

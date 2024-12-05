@@ -1,5 +1,5 @@
 const presenters = require("../../../../src/presenters");
-const constants = require("../../../../src/constants/question-keys");
+const { APP } = require("../../../../src/lib/config");
 
 describe("question-to-details", () => {
   let translate;
@@ -7,7 +7,7 @@ describe("question-to-details", () => {
 
   beforeEach(() => {
     question = {
-      questionKey: constants.RTI_PAYSLIP_NATIONAL_INSURANCE,
+      questionKey: APP.QUESTION_KEYS.RTI_PAYSLIP_NATIONAL_INSURANCE,
     };
 
     translate = jest.fn();
@@ -17,7 +17,7 @@ describe("question-to-details", () => {
     presenters.questionToDetails(question, translate);
 
     expect(translate).toHaveBeenCalledWith(
-      `pages.${constants.RTI_PAYSLIP_NATIONAL_INSURANCE}.details`
+      `pages.${APP.QUESTION_KEYS.RTI_PAYSLIP_NATIONAL_INSURANCE}.details`
     );
   });
 

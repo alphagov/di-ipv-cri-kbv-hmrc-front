@@ -1,3 +1,4 @@
+const { APP } = require("../lib/config");
 const taxYearToRange = require("../utils/tax-year-to-range");
 const monthsAgoToDate = require("../utils/months-ago-to-date");
 
@@ -5,9 +6,10 @@ module.exports = function (question, translate, language) {
   let key = "";
   const data = {};
 
-  if (question?.info?.months) {
-    Object.assign(data, monthsAgoToDate(question?.info?.months, language));
-  }
+  Object.assign(
+    data,
+    monthsAgoToDate(APP.DOMAIN.DEFAULT_PAYSLIP_MONTHS_AGO, language)
+  );
 
   if (question?.info?.currentTaxYear) {
     Object.assign(

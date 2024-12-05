@@ -1,6 +1,175 @@
+abandonRadio:
+  label: What would you like to do?
+  legend: What would you like to do?
+  hint: ""
+  content: ""
+  validation:
+    required: Select what you would like to do
+  items:
+    stop:
+      label: Look for other ways to prove your identity or access the service
+      value: stop
+      hint: ""
+      reveal: ""
+    continue:
+      label: Go back and try answering security questions
+      value: continue
+      hint: ""
+      reveal: ""
+selfAssessmentRouter:
+  hint: ""
+  legend: " "
+  validation:
+    required: Select if you sent a full or short Self Assessment tax return
+  items:
+    sa100:
+      label: Self Assessment tax return (SA100)
+      value: sa100
+      hint: ""
+      reveal: ""
+    sa200:
+      label: Short tax return (SA200)
+      value: sa200
+      hint: ""
+      reveal: ""
+  content: ""
+statePension:
+  label: State Pension
+  hint: Use box 8
+  validation:
+    default: Enter an amount in 'State Pension'
+    regex: Enter a whole number, like 123, in 'State Pension'
+  prefix: £
+  content: ""
+otherPension:
+  label: Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions
+  hint: Use box 11
+  validation:
+    default: Enter an amount in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
+    regex: Enter a whole number, like 123, in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
+  prefix: £
+  content: ""
+employmentAndSupportAllowance:
+  label: Taxable Incapacity Benefit and contribution-based Employment and Support Allowance (ESA)
+  hint: Use box 13
+  validation:
+    required: Enter an amount in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
+    regex: Enter a whole number, like 123, in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
+  prefix: £
+  content: ""
+jobSeekersAllowance:
+  label: "Jobseeker's Allowance"
+  hint: Use box 15
+  validation:
+    default: Enter an amount in 'Jobseeker's Allowance'
+    regex: Enter a whole number, like 123, in 'Jobseeker's Allowance'
+  prefix: £
+  content: ""
+statePensionAndBenefits:
+  label: Total of any other taxable State Pensions and benefits
+  hint: Use box 16
+  validation:
+    default: Enter an amount in 'Total of any other taxable State Pensions and benefits'
+    regex: Enter a whole number, like 123, in 'Total of any other taxable State Pensions and benefits'
+  prefix: £
+  content: ""
+statePensionShort:
+  label: State Pension
+  hint: Use box 4.1
+  validation:
+    default: Enter an amount in 'State Pension'
+    regex: Enter a whole number, like 123, in 'State Pension'
+  prefix: £
+  content: ""
+otherPensionShort:
+  label: Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions
+  hint: Use box 4.2
+  validation:
+    default: Enter an amount in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
+    regex: Enter a whole number, like 123, in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
+  prefix: £
+  content: ""
+employmentAndSupportAllowanceShort:
+  label: Taxable Incapacity Benefit and contribution-based Employment and Support Allowance (ESA)
+  hint: Use box 4.3
+  validation:
+    required: Enter an amount in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
+    regex: Enter a whole number, like 123, in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
+  prefix: £
+  content: ""
+jobSeekersAllowanceShort:
+  label: "Jobseeker's Allowance"
+  hint: Use box 4.5
+  validation:
+    default: Enter an amount in 'Jobseeker's Allowance'
+    regex: Enter a whole number, like 123, in 'Jobseeker's Allowance'
+  prefix: £
+  content: ""
+statePensionAndBenefitsShort:
+  label: Total of any other taxable State Pensions and benefits
+  hint: Use box 4.6
+  validation:
+    default: Enter an amount in 'Total of any other taxable State Pensions and benefits'
+    regex: Enter a whole number, like 123, in 'Total of any other taxable State Pensions and benefits'
+  prefix: £
+  content: ""
+selfAssessmentPaymentDate:
+  label: Date of payment
+  legend: Date of payment
+  hint: For example, 31 3 2024
+  content: ""
+  validation:
+    default: "Date of payment must be a real date"
+    before: "Date of payment must be today or in the past"
+    numeric-day: "Date of payment must include a day between 1 and 31"
+    numeric-month: "Date of payment must include a month between 1 and 12"
+    numeric-year: "Date of payment must include a valid year, like 2023"
+    date-day: "Date of payment must be a real date"
+    date-month: "Date of payment must include a month between 1 and 12"
+    date-year: "Date of payment must include a valid year, like 2023"
+    required-day: "Date of payment must include a day between 1 and 31"
+    required-month: "Date of payment must include a month between 1 and 12"
+    required-year: "Date of payment must include a valid year, like 2023"
+selfAssessmentPaymentAmount:
+  label: Payment amount
+  hint: Enter the amount in pounds and pence. For example, 3625.75.
+  prefix: £
+  content: ""
+  validation:
+    required: Enter an amount
+    regexNumeric: Enter a valid amount in pounds and pence, like 123.45
+    regexPoundsAndPence: Amount must include pounds and pence, like 123.45
+selfAssessmentPaymentDate-day:
+  content: ""
+selfAssessmentPaymentDate-month:
+  content: ""
+selfAssessmentPaymentDate-year:
+  content: ""
+govuk:
+  languageToggle:
+    ariaLabel: Choose Language
+    englishLanguage: English
+    englishVisuallyHidden: Change to English
+    welshLanguage: Cymraeg
+    welshVisuallyHidden: Newid yr iaith ir Gymraeg
+date-day:
+  label: Day
+date-month:
+  label: Month
+date-year:
+  label: Year
+tc-amount:
+  label: Amount
+  hint: For example, 36.75
+  prefix: £
+  content: ""
+  validation:
+    required: Enter an amount
+    regexNumeric: Enter a valid amount in pounds and pence, like 123.45
+    regexPoundsAndPence: Amount must include pounds and pence, like 123.45
 rti-payslip-national-insurance:
   label: Amount
-  hint: For example 123.86
+  hint: For example, 123.86
   prefix: £
   content: ""
   validation:
@@ -9,7 +178,7 @@ rti-payslip-national-insurance:
     regexPoundsAndPence: Amount must include pounds and pence, like 123.45
 rti-payslip-income-tax:
   label: Amount
-  hint: For example 123.86
+  hint: For example, 123.86
   prefix: £
   content: ""
   validation:
@@ -94,172 +263,3 @@ ita-bankaccount:
     default: Enter the last 4 digits of your account number
     numeric: Last 4 digits of your account number must only include numbers
     exactlength: Last 4 digits of your account number must be 4 numbers
-abandonRadio:
-  label: What would you like to do?
-  legend: What would you like to do?
-  hint: ""
-  content: ""
-  validation:
-    required: Select what you would like to do
-  items:
-    stop:
-      label: Look for other ways to prove your identity or access the service
-      value: stop
-      hint: ""
-      reveal: ""
-    continue:
-      label: Go back and try answering security questions
-      value: continue
-      hint: ""
-      reveal: ""
-selfAssessmentRouter:
-  hint: ""
-  legend: " "
-  validation:
-    required: Select if you sent a full or short Self Assessment tax return
-  items:
-    sa100:
-      label: Self Assessment tax return (SA100)
-      value: sa100
-      hint: ""
-      reveal: ""
-    sa200:
-      label: Short tax return (SA200)
-      value: sa200
-      hint: ""
-      reveal: ""
-  content: ""
-statePension:
-  label: State Pension
-  hint: Use box 8
-  validation:
-    default: Enter an amount in 'State Pension'
-    regex: Enter a whole number, like 123, in 'State Pension'
-  prefix: £
-  content: ""
-otherPension:
-  label: Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions
-  hint: Use box 11
-  validation:
-    default: Enter an amount in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
-    regex: Enter a whole number, like 123, in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
-  prefix: £
-  content: ""
-employmentAndSupportAllowance:
-  label: Taxable Incapacity Benefit and contribution-based Employment and Support Allowance
-  hint: Use box 13
-  validation:
-    required: Enter an amount in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
-    regex: Enter a whole number, like 123, in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
-  prefix: £
-  content: ""
-jobSeekersAllowance:
-  label: "Jobseeker's Allowance"
-  hint: Use box 15
-  validation:
-    default: Enter an amount in 'Jobseeker's Allowance'
-    regex: Enter a whole number, like 123, in 'Jobseeker's Allowance'
-  prefix: £
-  content: ""
-statePensionAndBenefits:
-  label: Total of any other taxable State Pensions and benefits
-  hint: Use box 16
-  validation:
-    default: Enter an amount in 'Total of any other taxable State Pensions and benefits'
-    regex: Enter a whole number, like 123, in 'Total of any other taxable State Pensions and benefits'
-  prefix: £
-  content: ""
-statePensionShort:
-  label: State Pension
-  hint: Use box 4.1
-  validation:
-    default: Enter an amount in 'State Pension'
-    regex: Enter a whole number, like 123, in 'State Pension'
-  prefix: £
-  content: ""
-otherPensionShort:
-  label: Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions
-  hint: Use box 4.2
-  validation:
-    default: Enter an amount in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
-    regex: Enter a whole number, like 123, in 'Pensions (other than State Pensions), retirement annuities and taxable lump sums treated as pensions'
-  prefix: £
-  content: ""
-employmentAndSupportAllowanceShort:
-  label: Taxable Incapacity Benefit and contribution-based Employment and Support Allowance
-  hint: Use box 4.3
-  validation:
-    required: Enter an amount in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
-    regex: Enter a whole number, like 123, in 'Taxable Incapacity Benefit and contribution-based Employment and Support Allowance'
-  prefix: £
-  content: ""
-jobSeekersAllowanceShort:
-  label: "Jobseeker's Allowance"
-  hint: Use box 4.5
-  validation:
-    default: Enter an amount in 'Jobseeker's Allowance'
-    regex: Enter a whole number, like 123, in 'Jobseeker's Allowance'
-  prefix: £
-  content: ""
-statePensionAndBenefitsShort:
-  label: Total of any other taxable State Pensions and benefits
-  hint: Use box 4.6
-  validation:
-    default: Enter an amount in 'Total of any other taxable State Pensions and benefits'
-    regex: Enter a whole number, like 123, in 'Total of any other taxable State Pensions and benefits'
-  prefix: £
-  content: ""
-tc-amount:
-  label: Amount
-  hint: For example 36.75
-  prefix: £
-  content: ""
-  validation:
-    required: Enter an amount
-    regexNumeric: Enter a valid amount in pounds and pence, like 123.45
-    regexPoundsAndPence: Amount must include pounds and pence, like 123.45
-selfAssessmentPaymentDate:
-  label: Date of payment
-  legend: Date of payment
-  hint: For example 31 3 2024
-  content: ""
-  validation:
-    default: "Date of payment must be a real date"
-    before: "Date of payment must be today or in the past"
-    numeric-day: "Date of payment must include a day between 1 and 31"
-    numeric-month: "Date of payment must include a month between 1 and 12"
-    numeric-year: "Date of payment must include a valid year, like 2023"
-    date-day: "Date of payment must be a real date"
-    date-month: "Date of payment must include a month between 1 and 12"
-    date-year: "Date of payment must include a valid year, like 2023"
-    required-day: "Date of payment must include a day between 1 and 31"
-    required-month: "Date of payment must include a month between 1 and 12"
-    required-year: "Date of payment must include a valid year, like 2023"
-selfAssessmentPaymentAmount:
-  label: Payment amount
-  hint: Enter the amount in pounds and pence. For example, 3625.75.
-  prefix: £
-  content: ""
-  validation:
-    required: Enter an amount
-    regexNumeric: Enter a valid amount in pounds and pence, like 123.45
-    regexPoundsAndPence: Amount must include pounds and pence, like 123.45
-selfAssessmentPaymentDate-day:
-  content: ""
-selfAssessmentPaymentDate-month:
-  content: ""
-selfAssessmentPaymentDate-year:
-  content: ""
-date-day:
-  label: Day
-date-month:
-  label: Month
-date-year:
-  label: Year
-govuk:
-  languageToggle:
-    ariaLabel: Choose Language
-    englishLanguage: English
-    englishVisuallyHidden: Change to English
-    welshLanguage: Cymraeg
-    welshVisuallyHidden: Newid yr iaith ir Gymraeg

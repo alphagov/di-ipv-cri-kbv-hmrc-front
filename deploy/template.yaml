@@ -28,35 +28,36 @@ Parameters:
     Description: "The ARN of the permissions boundary to apply when creating IAM roles"
     Type: String
     Default: "none"
-
-  CriIdentifier:
-    Description: "The unique credential issuer identifier"
-    Type: AWS::SSM::Parameter::Value<String>
-    Default: "/common-cri-parameters/CriIdentifier"
+  CodeSigningConfigArn:
+    Type: String
+    Description: >
+      The ARN of the Code Signing Config to use, provided by the deployment pipeline
+    Default: "none"
+  DeploymentStrategy:
+    Description: "Predefined deployment configuration for ECS application"
+    Type: String
+    Default: "None"
+  LogGroupRetentionInDays:
+    Description: "Retention for all log groups"
+    Type: Number
+    Default: "30"
 
 Conditions:
-  IsCSLSDisabled: !And
-    - !Not
-      - !Equals [!Ref CriIdentifier, "di-ipv-cri-kbv-hmrc-api"]
-    - !Not
-      - !Or
-        - !Equals [!Ref Environment, "dev"]
-        - !Equals [!Ref Environment, "build"]
-        - !Equals [!Ref Environment, "staging"]
-        - !Equals [!Ref Environment, "integration"]
-        - !Equals [!Ref Environment, "production"]
-
   IsNotDevelopment: !Or
     - !Equals [!Ref Environment, build]
     - !Equals [!Ref Environment, staging]
     - !Equals [!Ref Environment, integration]
     - !Equals [!Ref Environment, production]
   IsProduction: !Equals [!Ref Environment, production]
-  UsePermissionsBoundary:
-    Fn::Not:
-      - Fn::Equals:
-          - !Ref PermissionsBoundary
-          - "none"
+  IsPerformance: !Or
+    - !Equals [!Ref Environment, build]
+    - !Equals [!Ref Environment, production]
+  UsePermissionsBoundary: !Not
+    - !Equals [!Ref PermissionsBoundary, "none"]
+  UseCodeSigning: !Not
+    - !Equals [!Ref CodeSigningConfigArn, "none"]
+  UseCanaryDeployment: !Not
+    - !Equals [!Ref DeploymentStrategy, "None"]
 
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
@@ -64,14 +65,24 @@ Mappings:
   EnvironmentConfiguration:
     dev:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "false"
+      uaDisabled: "false"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "false"
+      uaDisabled: "false"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "false"
+      uaDisabled: "false"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "true"
+      uaDisabled: "false"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
+      ga4Disabled: "true"
+      uaDisabled: "false"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
     eu-west-2:
@@ -197,6 +208,26 @@ Resources:
       HealthCheckEnabled: TRUE
       HealthCheckProtocol: HTTP
       HealthCheckPath: /healthcheck
+      HealthCheckTimeoutSeconds: 2
+      HealthCheckIntervalSeconds: 5
+      HealthyThresholdCount: 2
+      Matcher:
+        HttpCode: 200
+      Port: 8080
+      Protocol: HTTP
+      TargetType: ip
+      VpcId:
+        Fn::ImportValue: !Sub "${VpcStackName}-VpcId"
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: 60
+
+  LoadBalancerListenerGreenTargetGroupECS:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      HealthCheckEnabled: TRUE
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: /healthcheck
       Matcher:
         HttpCode: 200
       Port: 8080
@@ -243,29 +274,46 @@ Resources:
     Type: "AWS::ECS::Service"
     Properties:
       Cluster: !Ref EcsCluster
-      DeploymentConfiguration:
-        MaximumPercent: 200
-        MinimumHealthyPercent: 50
-        DeploymentCircuitBreaker:
-          Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
-          Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
-      DesiredCount: 2
+      DeploymentConfiguration: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - MaximumPercent: 200
+          MinimumHealthyPercent: 50
+          DeploymentCircuitBreaker:
+            Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
+            Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
+      DeploymentController:
+        Type: !If
+          - UseCanaryDeployment
+          - CODE_DEPLOY
+          - ECS
       EnableECSManagedTags: false
-      HealthCheckGracePeriodSeconds: 60
+      HealthCheckGracePeriodSeconds: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - 60
       LaunchType: FARGATE
-      LoadBalancers:
-        - ContainerName: app
-          ContainerPort: 8080
-          TargetGroupArn: !Ref LoadBalancerListenerTargetGroupECS
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
-          SecurityGroups:
-            - !GetAtt ECSSecurityGroup.GroupId
-          Subnets:
-            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
-            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
-      TaskDefinition: !Ref ECSServiceTaskDefinition
+      LoadBalancers: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - - ContainerName: app
+            ContainerPort: 8080
+            TargetGroupArn: !Ref LoadBalancerListenerTargetGroupECS
+      NetworkConfiguration: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - AwsvpcConfiguration:
+            AssignPublicIp: DISABLED
+            SecurityGroups:
+              - !GetAtt ECSSecurityGroup.GroupId
+            Subnets:
+              - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
+              - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
+      TaskDefinition: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - !Ref ECSServiceTaskDefinition
+
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-ECS"
@@ -281,14 +329,14 @@ Resources:
   ECSAccessLogsGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/vendedlogs/aws/ecs/${AWS::StackName}-Front-ECS
-      RetentionInDays: 14
+      LogGroupName: !Sub /aws/vendedlogs/ecs/${AWS::StackName}-Front-ECS
+      RetentionInDays: !Ref LogGroupRetentionInDays
 
   ECSAccessLogsGroupSubscriptionFilterCSLS:
     Type: AWS::Logs::SubscriptionFilter
-    Condition: IsCSLSDisabled
+    Condition: IsNotDevelopment
     Properties:
-      DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prodpython"
+      DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prodpython-2"
       FilterPattern: ""
       LogGroupName: !Ref ECSAccessLogsGroup
 
@@ -316,6 +364,22 @@ Resources:
                 - Environment: !Ref Environment
             - Name: UA_CONTAINER_ID
               Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
+            - Name: GA4_CONTAINER_ID
+              Value: !If [IsProduction, "GTM-K4PBJH3", "GTM-KD86CMZ"]
+            - Name: UA_DISABLED
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref "Environment",
+                  uaDisabled,
+                ]
+            - Name: GA4_DISABLED
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref "Environment",
+                  ga4Disabled,
+                ]
             - Name: ANALYTICS_COOKIE_DOMAIN
               Value:
                 !If [
@@ -324,7 +388,7 @@ Resources:
                   !Sub "${Environment}.account.gov.uk",
                 ]
             - Name: LANGUAGE_TOGGLE_DISABLED
-              Value: true
+              Value: false
           Secrets:
             - Name: DT_TENANT
               ValueFrom: !Join
@@ -362,9 +426,9 @@ Resources:
               awslogs-group: !Ref ECSAccessLogsGroup
               awslogs-region: !Sub ${AWS::Region}
               awslogs-stream-prefix: !Sub ${AWS::StackName}-${Environment}
-      Cpu: "512"
+      Cpu: "1024"
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
-      Memory: "1024"
+      Memory: "2048"
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
@@ -488,6 +552,40 @@ Resources:
         - !Ref PermissionsBoundary
         - !Ref AWS::NoValue
 
+  ECSCanaryDeploymentStack:
+    Type: AWS::CloudFormation::Stack
+    Condition: UseCanaryDeployment
+    Properties:
+      TemplateURL: https://template-storage-templatebucket-1upzyw6v9cs42.s3.eu-west-2.amazonaws.com/ecs-canary-deployment/template.yaml?versionId=5RRU1nfKQD_d08FKttr8W7pzrAsqQiUM # v2.1.1
+      Parameters:
+        CloudWatchAlarms: !Sub
+          - "${MyAlarmOneVar},${MyAlarmTwoVar}"
+          - MyAlarmOneVar: !Ref 5XXOnELB
+            MyAlarmTwoVar: !Ref FrontTargetGroup5xxPercentErrors
+        CodeSigningConfigArn: !If
+          - UseCodeSigning
+          - !Ref CodeSigningConfigArn
+          - !Ref AWS::NoValue
+        ContainerName: "app"
+        ContainerPort: "8080"
+        DeploymentStrategy: !Ref DeploymentStrategy
+        ECSClusterName: !Ref EcsCluster
+        ECSServiceName: !GetAtt EcsService.Name
+        ECSServiceTaskDefinition: !Ref ECSServiceTaskDefinition
+        GreenTargetGroupName: !GetAtt LoadBalancerListenerGreenTargetGroupECS.TargetGroupName
+        LoadBalancerListenerARN: !Ref LoadBalancerListener
+        PermissionsBoundary: !If
+          - UsePermissionsBoundary
+          - Fn::ImportValue: !Sub "${AWS::StackName}-ECSCanaryPermissionsBoundaryArn"
+          - AWS::NoValue
+        SecurityGroups: !GetAtt ECSSecurityGroup.GroupId
+        Subnets: !Join
+          - ","
+          - - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
+            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
+        TargetGroupName: !GetAtt LoadBalancerListenerTargetGroupECS.TargetGroupName
+        VpcId: !Sub ${VpcStackName}-VpcId
+
   # Create the VPC Link to join the API Gateway to the
   # private Load Balancer in front of Passport Front ECS
   # Service.
@@ -552,54 +650,16 @@ Resources:
   APIGWAccessLogsGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/vendedlogs/aws/apigateway/${AWS::StackName}-API-GW-AccessLogs
-      RetentionInDays: 30
+      LogGroupName: !Sub /aws/vendedlogs/apigateway/${AWS::StackName}-API-GW-AccessLogs
+      RetentionInDays: !Ref LogGroupRetentionInDays
 
   APIGWAccessLogsGroupSubscriptionFilterCSLS:
     Type: AWS::Logs::SubscriptionFilter
-    Condition: IsCSLSDisabled
+    Condition: IsNotDevelopment
     Properties:
-      DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prodpython"
+      DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prodpython-2"
       FilterPattern: ""
       LogGroupName: !Ref APIGWAccessLogsGroup
-
-  # ECS Autoscaling
-  # The number of pods will increase when the configured CPU utilization is breached for more than 3 minutes.
-  # Scaling down will occur after 15 minutes of 90% utilization of the configured CPU utilization.
-
-  ECSAutoScalingTarget:
-    Condition: IsProduction
-    Type: AWS::ApplicationAutoScaling::ScalableTarget
-    Properties:
-      MaxCapacity: 4
-      MinCapacity: 2
-      ResourceId: !Join
-        - "/"
-        - - "service"
-          - !Ref EcsCluster
-          - !GetAtt EcsService.Name
-      RoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
-      ScalableDimension: ecs:service:DesiredCount
-      ServiceNamespace: ecs
-
-  ECSAutoScalingPolicy:
-    Condition: IsProduction
-    DependsOn: ECSAutoScalingTarget
-    Type: AWS::ApplicationAutoScaling::ScalingPolicy
-    Properties:
-      PolicyName: ECSAutoScalingPolicy
-      PolicyType: TargetTrackingScaling
-      ResourceId: !Join
-        - "/"
-        - - "service"
-          - !Ref EcsCluster
-          - !GetAtt EcsService.Name
-      ScalableDimension: ecs:service:DesiredCount
-      ServiceNamespace: ecs
-      TargetTrackingScalingPolicyConfiguration:
-        PredefinedMetricSpecification:
-          PredefinedMetricType: ECSServiceAverageCPUUtilization
-        TargetValue: 70.0
 
   SessionsTable:
     Type: AWS::DynamoDB::Table
@@ -620,6 +680,144 @@ Resources:
         # checkov:skip=CKV_AWS_119: Implement Customer Managed Keys in PYIC-1391
         SSEEnabled: true
         SSEType: KMS
+
+  # ECS Autoscaling
+  ECSAutoScalingTarget:
+    Condition: IsPerformance
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MaxCapacity: 60
+      MinCapacity: 2
+      ResourceId: !Join
+        - "/"
+        - - "service"
+          - !Ref EcsCluster
+          - !GetAtt EcsService.Name
+      RoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+
+  EcsStepScaleOutPolicy:
+    Condition: IsPerformance
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: EcsStepScalingOutPolicy
+      PolicyType: StepScaling
+      ResourceId: !Join
+        - "/"
+        - - "service"
+          - !Ref EcsCluster
+          - !GetAtt EcsService.Name
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+      StepScalingPolicyConfiguration:
+        AdjustmentType: PercentChangeInCapacity
+        Cooldown:
+          180 # The policy will continue to respond to additional alarm breaches,
+          # even while a scaling activity is in progress. This means Application
+          # Auto Scaling will evaluate all alarm breaches as they occur.
+          # A cooldown period is used to protect against over-scaling due to
+          # multiple alarm breaches occurring in rapid succession.
+        MinAdjustmentMagnitude: 1
+        StepAdjustments:
+          - MetricIntervalUpperBound: 0 # 60%
+            ScalingAdjustment: 100 # Scale by 100% of containers if the metric is breached
+            # with <60% utilisation
+          - MetricIntervalLowerBound: 0 # 60%
+            MetricIntervalUpperBound: 30 # 90%
+            ScalingAdjustment: 200 # Scale by 200% of containers if the metric is breached
+            # with 80-90% utilisation
+          - MetricIntervalLowerBound: 30 # 90%
+            MetricIntervalUpperBound: 35 # 95%
+            ScalingAdjustment: 300 # Scale by 300% of containers if the metric is breached
+            # with 90-95% utilisation
+          - MetricIntervalLowerBound: 35 # 95%
+            ScalingAdjustment:
+              500 # Scale by 500% of containers if the metric is breached
+              # with >95% utilisation
+              # Note: CPU can scale greater than 100% in a burst mode
+            # on Fargate, so leave the upper bound open
+
+  EcsStepScaleInPolicy:
+    Condition: IsPerformance
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: EcsStepScalingInPolicy
+      PolicyType: StepScaling
+      ResourceId: !Join
+        - "/"
+        - - "service"
+          - !Ref EcsCluster
+          - !GetAtt EcsService.Name
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+      StepScalingPolicyConfiguration:
+        AdjustmentType: PercentChangeInCapacity
+        Cooldown:
+          180 # The policy will continue to respond to additional alarm breaches,
+          # even while a scaling activity is in progress. This means Application
+          # Auto Scaling will evaluate all alarm breaches as they occur.
+          # A cooldown period is used to protect against under-scaling due to
+          # multiple alarm breaches occurring in rapid succession.
+        StepAdjustments:
+          - MetricIntervalUpperBound: -15 # 5%
+            ScalingAdjustment: -90 # Scale down by 90% of containers if the metric is breached
+            # with <5% utilisation
+          - MetricIntervalLowerBound: -15 # 5%
+            MetricIntervalUpperBound: 0 # 20%
+            ScalingAdjustment:
+              -50 # Scale down 50% of containers if the metric is breached
+              # with <20% utilisation
+
+  EcsStepScaleOutAlarm:
+    Condition: IsPerformance
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref EcsStepScaleOutPolicy
+      AlarmDescription: "EcsClusterOver60PercentCPU"
+      ComparisonOperator: "GreaterThanThreshold"
+      DatapointsToAlarm: "1"
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref EcsCluster
+        - Name: ServiceName
+          Value: !GetAtt EcsService.Name
+      Unit: "Percent"
+      EvaluationPeriods: "1"
+      MetricName: "CPUUtilization"
+      Namespace: "AWS/ECS"
+      Statistic: "Average"
+      Period: "60"
+      Threshold: "60"
+
+  EcsStepScaleInAlarm:
+    Condition: IsPerformance
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref EcsStepScaleInPolicy
+      AlarmDescription: "EcsClusterUnder60PercentCPU"
+      ComparisonOperator: "LessThanThreshold"
+      DatapointsToAlarm: "5"
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref EcsCluster
+        - Name: ServiceName
+          Value: !GetAtt EcsService.Name
+      Unit: "Percent"
+      EvaluationPeriods: "5"
+      MetricName: "CPUUtilization"
+      Namespace: "AWS/ECS"
+      Statistic: "Average"
+      Period: "60"
+      Threshold: "20"
 
   NoTaskCountAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -688,6 +886,47 @@ Resources:
       Threshold: 1
       ComparisonOperator: GreaterThanThreshold
       TreatMissingData: notBreaching
+
+  FrontTargetGroup5xxPercentErrors:
+    Type: AWS::CloudWatch::Alarm
+    # Condition: UseCanaryDeployment
+    Properties:
+      AlarmName: FrontTargetGroup5xxPercentAlarm
+      AlarmDescription: >
+        The number of HTTP 5XX server error codes that originate from the
+        target group is greater than 5% of all traffic.
+      EvaluationPeriods: 2
+      DatapointsToAlarm: 2
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      Metrics:
+        - Id: e1
+          Label: ErrorPercent
+          ReturnData: true
+          Expression: (m1/m2)*100
+        - Id: m1
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApplicationELB
+              MetricName: HTTPCode_Target_5XX_Count
+              Dimensions:
+                - Name: LoadBalancer
+                  Value: !GetAtt LoadBalancer.LoadBalancerFullName
+            Period: 60
+            Stat: Sum
+        - Id: m2
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApplicationELB
+              MetricName: RequestCount
+              Dimensions:
+                - Name: LoadBalancer
+                  Value: !GetAtt LoadBalancer.LoadBalancerFullName
+            Period: 60
+            Stat: Sum
 
 Outputs:
   FrontUrl:

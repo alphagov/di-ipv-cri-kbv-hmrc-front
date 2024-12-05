@@ -1,99 +1,3 @@
-rti-payslip-national-insurance:
-  label: Swm
-  hint: Er enghraifft, 123.86
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-rti-payslip-income-tax:
-  label: Swm
-  hint: Er enghraifft, 123.86
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-rti-p60-payment-for-year:
-  label: Swm
-  hint: Er enghraifft, 21350.75
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-rti-p60-earnings-above-pt:
-  label: Swm
-  hint: Er enghraifft, 24368
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regex: Rhaid i'r swm fod yn rhif cyfan, fel 123
-rti-p60-postgraduate-loan-deductions:
-  label: Swm
-  hint: For example, 765
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regex: Rhaid i'r swm fod yn rhif cyfan, fel 123
-rti-p60-statutory-shared-parental-pay:
-  label: Swm
-  hint: Er enghraifft, 15620.75
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-rti-p60-statutory-adoption-pay:
-  label: Swm
-  hint: Er enghraifft, 15620.75
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-rti-p60-statutory-maternity-pay:
-  label: Swm
-  hint: Er enghraifft, 15620.75
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-rti-p60-student-loan-deductions:
-  label: Swm
-  hint: Er enghraifft, 765
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regex: Rhaid i'r swm fod yn rhif cyfan, fel 123
-rti-p60-employee-ni-contributions:
-  label: Swm
-  hint: Er enghraifft, 836.16
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
-ita-bankaccount:
-  label: 4 digid olaf o rif eich cyfrif
-  hint: ""
-  prefix: ""
-  content: ""
-  validation:
-    default: Rhowch y 4 digid olaf o rif eich cyfrif
-    numeric: Rhaid i'r 4 digid olaf o rif eich cyfrif gynnwys rhifau yn unig
-    exactlength: Rhaid i 4 digid olaf eich rhif cyfrif fod yn 4 rhif
 abandonRadio:
   label: Beth hoffech chi ei wneud?
   legend: Beth hoffech chi ei wneud?
@@ -209,15 +113,6 @@ statePensionAndBenefitsShort:
     regex: Rhowch rif cyfan, fel 123, yn 'Cyfanswm unrhyw Bensiynau y Wladwriaeth a budd-daliadau trethadwy eraill'
   prefix: £
   content: ""
-tc-amount:
-  label: Swm
-  hint: Er enghraifft, 36.75
-  prefix: £
-  content: ""
-  validation:
-    required: Rhowch swm
-    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
-    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
 selfAssessmentPaymentDate:
   label: Dyddiad y taliad
   legend: Dyddiad y taliad
@@ -250,12 +145,6 @@ selfAssessmentPaymentDate-month:
   content: ""
 selfAssessmentPaymentDate-year:
   content: ""
-date-day:
-  label: Dydd
-date-month:
-  label: Mis
-date-year:
-  label: Blwyddyn
 govuk:
   languageToggle:
     ariaLabel: Dewis iaith
@@ -263,3 +152,114 @@ govuk:
     englishVisuallyHidden: Change to English
     welshLanguage: Cymraeg
     welshVisuallyHidden: Newid yr iaith ir Gymraeg
+date-day:
+  label: Dydd
+date-month:
+  label: Mis
+date-year:
+  label: Blwyddyn
+tc-amount:
+  label: Swm
+  hint: Er enghraifft, 36.75
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-payslip-national-insurance:
+  label: Swm
+  hint: Er enghraifft, 123.86
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-payslip-income-tax:
+  label: Swm
+  hint: Er enghraifft, 123.86
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-p60-payment-for-year:
+  label: Swm
+  hint: Er enghraifft, 21350.75
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-p60-earnings-above-pt:
+  label: Swm
+  hint: Er enghraifft, 24368
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regex: Rhaid i'r swm fod yn rhif cyfan, fel 123
+rti-p60-postgraduate-loan-deductions:
+  label: Swm
+  hint: For example, 765
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regex: Rhaid i'r swm fod yn rhif cyfan, fel 123
+rti-p60-statutory-shared-parental-pay:
+  label: Swm
+  hint: Er enghraifft, 15620.75
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-p60-statutory-adoption-pay:
+  label: Swm
+  hint: Er enghraifft, 15620.75
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-p60-statutory-maternity-pay:
+  label: Swm
+  hint: Er enghraifft, 15620.75
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+rti-p60-student-loan-deductions:
+  label: Swm
+  hint: Er enghraifft, 765
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regex: Rhaid i'r swm fod yn rhif cyfan, fel 123
+rti-p60-employee-ni-contributions:
+  label: Swm
+  hint: Er enghraifft, 836.16
+  prefix: £
+  content: ""
+  validation:
+    required: Rhowch swm
+    regexNumeric: Rhowch swm dilys mewn punnoedd a cheiniogau, fel 123.45
+    regexPoundsAndPence: Rhaid i'r swm gynnwys punnoedd a cheiniogau, fel 123.45
+ita-bankaccount:
+  label: 4 digid olaf o rif eich cyfrif
+  hint: ""
+  prefix: ""
+  content: ""
+  validation:
+    default: Rhowch y 4 digid olaf o rif eich cyfrif
+    numeric: Rhaid i'r 4 digid olaf o rif eich cyfrif gynnwys rhifau yn unig
+    exactlength: Rhaid i 4 digid olaf eich rhif cyfrif fod yn 4 rhif

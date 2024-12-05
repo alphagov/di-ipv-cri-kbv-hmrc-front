@@ -206,13 +206,15 @@ resources:
     steps:
       # short-circuit when it's the 'abandon' journey
       - type: script
+        lang: groovy
         code: |
-          if (/questions-abandon.+/.test(context.request.headers['session-id'])) {
-            var deniedResponse = {
+          if (context.request.headers['session-id'] ==~ /questions-abandon.+/) {
+            def deniedResponse = [
               redirect_uri: "http://example.net",
-              oauth_error: { error_description: "access-denied", error: "access_denied" }
-            };
-            respond().withStatusCode(500).withContent(JSON.stringify(deniedResponse));
+              oauth_error: [ error_description: "access-denied", error: "access_denied" ]
+            ]
+            def serializer = new groovy.json.JsonOutput()
+            respond().withStatusCode(500).withContent(serializer.toJson(deniedResponse))
           }
     response:
       template: true

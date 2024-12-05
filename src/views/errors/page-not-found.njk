@@ -1,4 +1,19 @@
 {% extends "base-page.njk" %}
+{% from "components/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
-{% set hmpoPageKey = "errors.pageNotFound" %}
+{% set hmpoPageKey = "pageNotFound" %}
 {% set gtmJourney = "kbv-hmrc - not found" %}
+
+{% block mainContent %}
+  {{ super() }}
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '404',
+    englishPageTitle: hmpoTitle | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'hmrc-kbv',
+    contentId: 'undefined',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
+{% endblock %}

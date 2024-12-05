@@ -8,7 +8,7 @@ module.exports = class PensionsBenefitsShortTaxReturnPage {
   }
 
   async continue() {
-    await this.page.click("#continue");
+    await this.page.click("button:text('continue')");
   }
 
   isCurrentPage() {

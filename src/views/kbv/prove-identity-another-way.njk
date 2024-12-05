@@ -1,14 +1,28 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-warning-text/macro.njk" import hmpoWarningText %}
+{% from "components/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
-{% set hmpoPageKey = "prove-identity-another-way" %}
-{% set hmpoPageContent = "prove-identity-another-way" %}
 {% set gtmJourney = "prove-identity-another-way - start" %}
 
 {% block submitButton %}
   {{ hmpoWarningText({
-    text: translate("pages.prove-identity-another-way.warning"),
+    text: translate("pages.proveIdentityAnotherWay.warning"),
     iconFallbackText: "Warning"
   }) }}
-  {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+  {{ hmpoSubmit(ctx, {
+    id: "continue",
+    text: translate("buttons.next"),
+    attributes: {"data-nav": true, "data-link": ctx("action")}
+  }) }}
+
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '200',
+    englishPageTitle: hmpoTitle | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'kbv',
+    contentId: '8adc68a8-395d-4a1a-85a1-c707fa89e408',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
 {% endblock %}

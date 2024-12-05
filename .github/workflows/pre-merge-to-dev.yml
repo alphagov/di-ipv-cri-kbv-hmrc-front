@@ -39,10 +39,10 @@ jobs:
           password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
 
       - name: SAM Validate
-        run: sam validate --region ${{ env.AWS_REGION }} -t deploy/template.yaml
+        run: sam validate --region ${{ env.AWS_REGION }} -t deploy/template.yaml --lint
 
       - name: "Push image and template"
-        uses: govuk-one-login/devplatform-upload-action-ecr@v1.2.7
+        uses: govuk-one-login/devplatform-upload-action-ecr@v1.3.0
         with:
           artifact-bucket-name: ${{ secrets.DEV_ARTIFACT_BUCKET_NAME }}
           container-sign-kms-key-arn: ${{ secrets.DEV_CONTAINER_SIGN_KMS_KEY }}

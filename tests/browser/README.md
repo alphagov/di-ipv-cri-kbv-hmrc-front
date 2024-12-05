@@ -15,9 +15,9 @@ The following quickstart process details how to install and run the browser test
 
 1. Install node dependencies:
 
-   ```
-   npm install
-   ```
+```
+npm install
+```
 
 ### Configuring the application
 
@@ -31,9 +31,15 @@ Set the [environment variables](./environment-variables.md) accordingly.
 
 ### Running the tests
 
+Run imposter from the `../imposter` directory - see the `README.md` file there for details.
+
+Start the web server by running `npm run start` in the root directory
+
 ```
 npm run test:browser
 ```
+
+Set `CHROMIUM_HEADLESS` to `false` to see the user flow in a browser.
 
 ### Cucumber
 

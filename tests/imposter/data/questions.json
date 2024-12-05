@@ -2,16 +2,10 @@
   "questions": {
     "payslips": [
       {
-        "questionKey": "rti-payslip-national-insurance",
-        "info": {
-          "months": "3"
-        }
+        "questionKey": "rti-payslip-national-insurance"
       },
       {
-        "questionKey": "rti-payslip-income-tax",
-        "info": {
-          "months": "3"
-        }
+        "questionKey": "rti-payslip-income-tax"
       }
     ],
     "p60": [
@@ -76,10 +70,7 @@
         "questionKey": "ita-bankaccount"
       },
       {
-        "questionKey": "tc-amount",
-        "info": {
-          "months": "3"
-        }
+        "questionKey": "tc-amount"
       }
     ],
     "selfAssessment": [
@@ -114,10 +105,7 @@
     ],
     "abandon": [
       {
-        "questionKey": "rti-payslip-national-insurance",
-        "info": {
-          "months": "3"
-        }
+        "questionKey": "rti-payslip-national-insurance"
       }
     ]
   }

@@ -1,11 +1,21 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
+{% from "components/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
-{% set hmpoPageKey = "pensions-benefits-self-assessment" %}
-{% set hmpoPageContent = "pensions-benefits-self-assessment" %}
 {% set gtmJourney = "pensions-benefits-self-assessment - start" %}
 
-{% block submitButton %}
-  {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+{% block mainContent %}
+  {{ super() }}
   {{ hmpoHtml(translate("pages.shared.abandon")) }}
+
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '200',
+    englishPageTitle: hmpoTitle | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'kbv',
+    contentId: 'sa-income-from-pensions',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
 {% endblock %}

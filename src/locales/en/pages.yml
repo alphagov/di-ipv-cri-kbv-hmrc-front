@@ -1,6 +1,6 @@
 shared:
   abandon: "<a href='/kbv/prove-identity-another-way' class='govuk-link' id='abandon' data-id='abandon'>I need to prove my identity another way</a>"
-answer-security-questions:
+answerSecurityQuestions:
   title: Answer some security questions
   h1: Answer some security questions
   content:
@@ -21,19 +21,59 @@ answer-security-questions:
       <p>If you'd like to know more about how your details will be used to prove your identity,
       <a href='https://signin.account.gov.uk/privacy-notice' class='govuk-link' rel='noreferrer noopener' target='_blank'>
       read our privacy notice (opens in a new tab)</a>.</p>
-  start-button: Start
+  startButton: Start
+proveIdentityAnotherWay:
+  title: Prove your identity another way
+  h1: Prove your identity another way
+  content: You may be able to prove your identity another way with GOV.UK One Login. Or you can go back to the service you need to use and check if there are other ways to access it.
+  warning: You cannot return to this screen if you look for another way to prove your identity.
+questionWhatTypeSelfAssessment:
+  title: What type of Self Assessment tax return did you send for the tax year {{ currentYearRangeStart }} to {{ currentYearRangeEnd }}?
+  h1: What type of Self Assessment tax return did you send for the tax year {{ currentYearRangeStart }} to {{ currentYearRangeEnd }}?
+  content:
+  html: >-
+    <p class="govuk-hint">This is so we can ask you questions about the right Self Assessment tax return.</p>
+    <p class="govuk-hint">You’ll only have sent a short tax return (SA200) if HMRC told you to.</p>
+questionEnterPensionsBenefitsSelfAssessment:
+  title: Enter pensions and benefits amounts from your Self Assessment tax return
+  h1: Enter pensions and benefits amounts from your Self Assessment tax return
+  content:
+    - <div class="govuk-inset-text"><p>To answer this question, use your Self Assessment tax return for either of these tax years:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}</li></ul></div>
+    - Tell us the amount of pensions and benefits you received.
+    - The box numbers and names on this page are the same as on your tax return.
+    - Enter the amounts in pounds without the pence, exactly as they appear on your tax return. If the box in your tax return is empty, enter 0.
+questionEnterPensionsBenefitsShortTaxReturn:
+  title: Enter pensions and benefits amounts from your short tax return
+  h1: Enter pensions and benefits amounts from your short tax return
+  content:
+    - <div class="govuk-inset-text"><p>To answer this question, use your short tax return (SA200) for either of these tax years:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}</li></ul></div>
+    - Tell us the amounts you received in pensions and benefits.
+    - The box numbers and names on this page are the same as on your tax return.
+    - Enter the amounts in pounds without the pence, exactly as they appear on your tax return. If the box on your tax return is empty, enter 0.
+questionEnterRecentSelfAssessmentPayment:
+  title: Enter the details of your most recent Self Assessment payment
+  h1: Enter the details of your most recent Self Assessment payment
+  content:
+    - <div class="govuk-inset-text">You can use a  bank statement to answer this question.</div>
+    - Tell us about the last payment you made towards your Self Assessment tax bill.
+tc-amount:
+  title: Enter a recent tax credits payment amount
+  h1: Enter a recent tax credits payment amount
+  content:
+    - Tell us about a tax credits payment you’ve had after {{ dynamicDate }}.
+    - You’ll get tax credits payments every week or every 4 weeks. You only need to enter one payment amount.
 rti-payslip-national-insurance:
   title: Enter the amount of National Insurance you paid from a recent payslip
   h1: Enter the amount of National Insurance you paid from a recent payslip
-  inset: Use a payslip dated after {{ dynamicDate }} to answer this question
+  inset: Use a payslip dated after {{ dynamicDate }} to answer this question.
   content:
     - Tell us the amount of National Insurance you paid.
-    - You can usually find the amount next to any pensions or PAYE/income tax deductions on your payslip.
+    - You can usually find the amount next to any pensions or PAYE/Income Tax deductions on your payslip.
     - Enter the amount in pounds and pence, exactly as it appears on your payslip.
 rti-payslip-income-tax:
   title: Enter the amount of Income Tax you paid from a recent payslip
   h1: Enter the amount of Income Tax you paid from a recent payslip
-  inset: Use a payslip dated after {{ dynamicDate }} to help you answer this question
+  inset: Use a payslip dated after {{ dynamicDate }} to help you answer this question.
   content:
     - Tell us the amount of Income Tax you paid.
     - You can usually find the amount next to any pensions or National Insurance payments on your payslip. It may be called PAYE/Income Tax.
@@ -47,7 +87,7 @@ rti-p60-payment-for-year:
     - "{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}"
   content:
-    - Tell us the amount in the box labelled ‘total for year’. You’ll find this in the ‘pay and income tax details’ section of your P60.
+    - Tell us the amount in the box labelled ‘total for year’. You’ll find this in the ‘pay and Income Tax details’ section of your P60.
     - Enter the amount in pounds and pence, exactly as it appears on your P60.
   details:
     summaryText: If you have more than one P60
@@ -66,7 +106,7 @@ rti-p60-earnings-above-pt:
     - Tell us the amount in the box labelled ‘earnings above the PT, up to and including the Upper Earnings Limit (UEL)’. You’ll find this in the ‘National Insurance contributions in this employment’ section of your P60.
     - Enter the amount in pounds without the pence, exactly as it appears on your P60.
   details:
-    summaryText: If you have more than one P60
+    summaryText: If you have more than one P60 in a tax year
     html: >-
       <p>You only need to enter the amount from one P60.</p>
 rti-p60-postgraduate-loan-deductions:
@@ -78,7 +118,7 @@ rti-p60-postgraduate-loan-deductions:
     - "{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}"
   content:
-    - Tell us the amount in the box labelled ‘postgraduate loan deductions.’ You’ll find this in the ‘other details’ section of your P60.
+    - Tell us the amount in the box labelled ‘postgraduate loan deductions’. You’ll find this in the ‘other details’ section of your P60.
     - Enter the amount in pounds without the pence, exactly as it appears on your P60.
   details:
     summaryText: If you have more than one P60 in a tax year
@@ -93,7 +133,7 @@ rti-p60-statutory-shared-parental-pay:
     - "{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}"
   content:
-    - Tell us the amount in the box labelled ‘statutory shared parental pay.’ You’ll find this in the ‘statutory payments’ section of your P60.
+    - Tell us the amount in the box labelled ‘statutory shared parental pay’. You’ll find this in the ‘statutory payments’ section of your P60.
     - Enter the amount in pounds and pence, exactly as it appears on your P60.
   details:
     summaryText: If you have more than one P60 in a tax year
@@ -108,7 +148,7 @@ rti-p60-statutory-adoption-pay:
     - "{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}"
   content:
-    - Tell us the amount in the box labelled ‘statutory adoption pay.’ You’ll find this in the ‘statutory payments’ section of your P60.
+    - Tell us the amount in the box labelled ‘statutory adoption pay’. You’ll find this in the ‘statutory payments’ section of your P60.
     - Enter the amount in pounds and pence, exactly as it appears on your P60.
   details:
     summaryText: If you have more than one P60 in a tax year
@@ -123,7 +163,7 @@ rti-p60-statutory-maternity-pay:
     - "{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}"
   content:
-    - Tell us the amount in the box labelled ‘statutory maternity pay.’ You’ll find this in the ‘statutory payments’ section of your P60.
+    - Tell us the amount in the box labelled ‘statutory maternity pay’. You’ll find this in the ‘statutory payments’ section of your P60.
     - Enter the amount in pounds and pence, exactly as it appears on your P60.
   details:
     summaryText: If you have more than one P60 in a tax year
@@ -138,7 +178,7 @@ rti-p60-student-loan-deductions:
     - "{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}"
   content:
-    - Tell us the amount in the box labelled ‘student loan deductions.’ You’ll find this in the ‘other details’ section of your P60.
+    - Tell us the amount in the box labelled ‘student loan deductions’. You’ll find this in the ‘other details’ section of your P60.
     - Enter the amount in pounds without the pence, exactly as it appears on your P60.
   details:
     summaryText: If you have more than one P60 in a tax year
@@ -168,42 +208,3 @@ ita-bankaccount:
       - online account or banking app
       - bank statement
       - paying-in book or cheque book
-prove-identity-another-way:
-  title: Prove your identity another way
-  h1: Prove your identity another way
-  content: You may be able to prove your identity another way with GOV.UK One Login. Or you can go back to the service you need to use and check if there are other ways to access it.
-  warning: You cannot return to this screen if you look for another way to prove your identity.
-questionWhatTypeSelfAssessment:
-  title: What type of Self Assessment tax return did you send for the tax year {{ currentYearRangeStart }} to {{ currentYearRangeEnd }}?
-  h1: What type of Self Assessment tax return did you send for the tax year {{ currentYearRangeStart }} to {{ currentYearRangeEnd }}?
-  content:
-    - This is so we can ask you questions about the right Self Assessment tax return.
-    - You’ll only have sent a short tax return (SA200) if HMRC told you to.
-pensions-benefits-self-assessment:
-  title: Enter pensions and benefits amounts from your Self Assessment tax return
-  h1: Enter pensions and benefits amounts from your Self Assessment tax return
-  content:
-    - <div class="govuk-inset-text"><p>To answer this question, use your Self Assessment tax return for either of these tax years:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}</li></ul></div>
-    - Tell us the amount of pensions and benefits you received.
-    - The box numbers and names on this page are the same as on your tax return.
-    - Enter the amounts in pounds without the pence, exactly as they appear on your tax return. If the box in your tax return is empty, enter 0.
-pensions-benefits-short-tax-return:
-  title: Enter pensions and benefits amounts from your short tax return
-  h1: Enter pensions and benefits amounts from your short tax return
-  content:
-    - <div class="govuk-inset-text"><p>To answer this question, use your short tax return (SA200) for either of these tax years:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} to {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} to {{ previousYearRangeEnd }}</li></ul></div>
-    - Tell us the amounts you received in pensions and benefits.
-    - The box numbers and names on this page are the same as on your tax return.
-    - Enter the amounts in pounds without the pence, exactly as they appear on your tax return. If the box on your tax return is empty, enter 0.
-tc-amount:
-  title: Enter a recent tax credits payment amount
-  h1: Enter a recent tax credits payment amount
-  content:
-    - Tell us about a tax credits payment you’ve had after {{ dynamicDate }}.
-    - You’ll get tax credits payments every week or every 4 weeks. You only need to enter one payment amount.
-questionEnterRecentSelfAssessmentPayment:
-  title: Enter the details of your most recent Self Assessment payment
-  h1: Enter the details of your most recent Self Assessment payment
-  content:
-    - <div class="govuk-inset-text">You can use a  bank statement to answer this question.</div>
-    - Tell us about the last payment you made towards your Self Assessment tax bill.

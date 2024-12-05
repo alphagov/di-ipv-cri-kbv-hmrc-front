@@ -1,6 +1,6 @@
 shared:
   abandon: "<a href='/kbv/prove-identity-another-way' class='govuk-link' id='abandon' data-id='abandon'>Mae angen i mi brofi fy hunaniaeth mewn ffordd arall</a>"
-answer-security-questions:
+answerSecurityQuestions:
   title: Atebwch rhai cwestiynau diogelwch
   h1: Atebwch rhai cwestiynau diogelwch
   content:
@@ -21,11 +21,51 @@ answer-security-questions:
       <p>Os hoffech wybod mwy am sut y bydd eich manylion yn cael eu defnyddio i brofi eich hunaniaeth,
       <a href='https://signin.account.gov.uk/privacy-notice' class='govuk-link' rel='noreferrer noopener' target='_blank'>
       darllenwch ein hysbysiad preifatrwydd (agor mewn tab newydd)</a>.</p>
-  start-button: Dechrau
+  startButton: Dechrau
+proveIdentityAnotherWay:
+  title: Profi eich hunaniaeth mewn ffordd arall
+  h1: Profi eich hunaniaeth mewn ffordd arall
+  content: Efallai y gallwch brofi eich hunaniaeth mewn ffordd arall gyda GOV.UK One Login. Neu gallwch fynd yn ôl i'r gwasanaeth rydych angen ei ddefnyddio a gwirio a oes ffyrdd eraill o gael mynediad ato.
+  warning: Ni allwch ddychwelyd i'r sgrin hon os ydych yn chwilio am ffordd arall o brofi eich hunaniaeth.
+questionWhatTypeSelfAssessment:
+  title: Pa fath o ffurflen dreth Hunanasesiad a anfonwyd gennych ar gyfer blwyddyn dreth {{ currentYearRangeStart }} i {{ currentYearRangeEnd }}?
+  h1: Pa fath o ffurflen dreth Hunanasesiad a anfonwyd gennych ar gyfer blwyddyn dreth {{ currentYearRangeStart }} i {{ currentYearRangeEnd }}?
+  content:
+  html: >-
+    <p class="govuk-hint">Mae hyn er mwyn i ni ofyn cwestiynau i chi am y ffurflen gywir.</p>
+    <p class="govuk-hint">Byddwch ond wedi anfon ffurflen dreth fer (SA200) os oedd CThEF wedi dweud wrthych am wneud hynny.</p>
+questionEnterPensionsBenefitsSelfAssessment:
+  title: Rhowch symiau pensiynau a budd-daliadau o'ch Ffurflen dreth Hunanasesiad
+  h1: Rhowch symiau pensiynau a budd-daliadau o'ch Ffurflen dreth Hunanasesiad
+  content:
+    - <div class="govuk-inset-text"><p>I ateb y cwestiwn hwn, defnyddiwch eich Ffurflen dreth Hunanasesiad ar gyfer y naill flwyddyn dreth yma neu'r llall:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}</li></ul></div>
+    - Dywedwch wrthym swm y pensiynau a budd-daliadau rydych yn eu derbyn.
+    - Mae rhifau'r blychau ac enwau ar y dudalen hon yr un fath ag ar eich ffurflen dreth.
+    - Rhowch y symiau mewn punnoedd heb y ceiniog, yn union fel maent yn ymddangos ar eich ffurflen dreth. Os yw'r blwch ar eich ffurflen dreth yn wag, rhowch 0.
+questionEnterPensionsBenefitsShortTaxReturn:
+  title: Rhowch symiau pensiynau a budd-daliadau o'ch ffurflen dreth fer
+  h1: Rhowch symiau pensiynau a budd-daliadau o'ch ffurflen dreth fer
+  content:
+    - <div class="govuk-inset-text"><p>I ateb y cwestiwn hwn, defnyddiwch eich ffurflen treth fer (SA200) ar gyfer naill flwyddyn dreth yma neu'r llall:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}</li></ul></div>
+    - Dywedwch wrthym swm y pensiynau a budd-daliadau rydych yn eu derbyn.
+    - Mae rhifau'r blychau ac enwau ar y dudalen hon yr un fath ag ar eich ffurflen dreth.
+    - Rhowch y symiau mewn punnoedd heb y ceiniog, yn union fel maent yn ymddangos ar eich ffurflen dreth. Os yw'r blwch ar eich ffurflen dreth yn wag, rhowch 0.
+questionEnterRecentSelfAssessmentPayment:
+  title: Rhowch y manylion o'ch taliad Hunanasesiad mwyaf diweddar
+  h1: Rhowch y manylion o'ch taliad Hunanasesiad mwyaf diweddar
+  content:
+    - <div class="govuk-inset-text">Gallwch ddefnyddio cyfriflen banc i ateb y cwestiwn hwn.</div>
+    - Dywedwch wrthym y taliad diwethaf a wnaethoch tuag at eich bil treth Hunanasesiad.
+tc-amount:
+  title: Rhowch swm taliad credydau treth diweddar
+  h1: Rhowch swm taliad credydau treth diweddar
+  content:
+    - Dywedwch wrthym am daliad credydau treth a gawsoch ar ôl {{ dynamicDate }}.
+    - Byddwch yn cael taliadau credydau treth bob wythnos neu bob 4 wythnos. Dim ond swm un taliad sydd angen i chi ei roi
 rti-payslip-national-insurance:
   title: Rhowch swm yr Yswiriant Gwladol a dalwyd gennych o slip cyflog diweddar
   h1: Rhowch swm yr Yswiriant Gwladol a dalwyd gennych o slip cyflog diweddar
-  inset: Defnyddiwch slip cyflog wedi'i ddyddio ar ôl {{ dynamicDate }} i ateb y cwestiwn hwn
+  inset: Defnyddiwch slip cyflog wedi'i ddyddio ar ôl {{ dynamicDate }} i ateb y cwestiwn hwn.
   content:
     - Dywedwch wrthym faint o Yswiriant Gwladol rydych wedi'i dalu.
     - Fel arfer, gallwch ddod o hyd i'r swm wrth ymyl unrhyw bensiynau neu ddidyniadau TWE/Treth Incwm ar eich slip cyflog.
@@ -33,7 +73,7 @@ rti-payslip-national-insurance:
 rti-payslip-income-tax:
   title: Rhowch faint o dreth a dalwyd gennych o slip cyflog diweddar
   h1: Rhowch faint o dreth a dalwyd gennych o slip cyflog diweddar
-  inset: Defnyddiwch slip cyflog wedi'i ddyddio ar ôl {{ dynamicDate }} i ateb y cwestiwn hwn
+  inset: Defnyddiwch slip cyflog wedi'i ddyddio ar ôl {{ dynamicDate }} i ateb y cwestiwn hwn.
   content:
     - Dywedwch wrthym faint o Dreth Incwm rydych wedi'i dalu.
     - Fel arfer, gallwch ddod o hyd i'r swm wrth ymyl unrhyw bensiynau neu daliadau Yswiriant Gwladol ar eich slip cyflog. Gallai gael ei alw'n TWE neu'n Dreth Incwm
@@ -66,7 +106,7 @@ rti-p60-earnings-above-pt:
     - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘enillion dros y PD, hyd at a chan gynnwys y Terfyn Enillion Uchaf (TEU)’. Byddwch yn dod o hyd i hyn yn yr adran ‘Cyfraniadau Yswiriant Gwladol yn y gyflogaeth hon’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 rti-p60-postgraduate-loan-deductions:
@@ -78,10 +118,10 @@ rti-p60-postgraduate-loan-deductions:
     - "{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}"
   content:
-    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘didyniadau benthyciad ôl-raddedig.’ Byddwch yn dod o hyd i hyn yn yr adran ‘manylion eraill’ o'ch P60.
+    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘didyniadau benthyciad ôl-raddedig’. Byddwch yn dod o hyd i hyn yn yr adran ‘manylion eraill’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 rti-p60-statutory-shared-parental-pay:
@@ -93,10 +133,10 @@ rti-p60-statutory-shared-parental-pay:
     - "{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}"
   content:
-    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘tâl statudol ar y cyd i rieni.’ Byddwch yn dod o hyd i hyn yn yr adran ‘taliadau statudol’ o'ch P60.
+    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘tâl statudol ar y cyd i rieni’. Byddwch yn dod o hyd i hyn yn yr adran ‘taliadau statudol’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 rti-p60-statutory-adoption-pay:
@@ -108,10 +148,10 @@ rti-p60-statutory-adoption-pay:
     - "{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}"
   content:
-    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘tâl mabwysiadu statudol.’ Byddwch yn dod o hyd i hyn yn yr adran ‘taliadau statudol’ o'ch P60.
+    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘tâl mabwysiadu statudol’. Byddwch yn dod o hyd i hyn yn yr adran ‘taliadau statudol’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 rti-p60-statutory-maternity-pay:
@@ -123,10 +163,10 @@ rti-p60-statutory-maternity-pay:
     - "{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}"
   content:
-    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘tâl mamolaeth statudol.’ Byddwch yn dod o hyd i hyn yn yr adran ‘taliadau statudol’ o'ch P60.
+    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘tâl mamolaeth statudol’. Byddwch yn dod o hyd i hyn yn yr adran ‘taliadau statudol’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 rti-p60-student-loan-deductions:
@@ -138,10 +178,10 @@ rti-p60-student-loan-deductions:
     - "{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}"
     - "{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}"
   content:
-    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘didyniadau benthyciad myfyriwr.’ Byddwch yn dod o hyd i hyn yn yr adran ‘manylion eraill’ o'ch P60.
+    - Dywedwch wrthym y swm yn y blwch wedi'i labelu ‘didyniadau benthyciad myfyriwr’. Byddwch yn dod o hyd i hyn yn yr adran ‘manylion eraill’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 rti-p60-employee-ni-contributions:
@@ -156,7 +196,7 @@ rti-p60-employee-ni-contributions:
     - Dywedwch wrthym y swm yn y blwch wedi'i labelu 'cyfraniadau'r cyflogai sy'n ddyledus ar yr holl enillion dros y PD’. Byddwch yn dod o hyd i hyn yn yr adran ‘Cyfraniadau Yswiriant Gwladol yn y gyflogaeth hon’ o'ch P60.
     - Rhowch y swm mewn punnoedd a cheiniogau, yn union fel mae'n ymddangos ar eich P60.
   details:
-    summaryText: Os oes gennych fwy nag un P60
+    summaryText: Os oes gennych fwy nag un P60 mewn blwyddyn dreth
     html: >-
       <p>Dim ond y swm o un P60 sydd angen i chi ei rhoi.</p>
 ita-bankaccount:
@@ -168,42 +208,3 @@ ita-bankaccount:
       - cyfrif ar-lein neu ap bancio
       - cyfriflen banc
       - llyfr talu i mewn neu lyfr siec
-prove-identity-another-way:
-  title: Profi eich hunaniaeth mewn ffordd arall
-  h1: Profi eich hunaniaeth mewn ffordd arall
-  content: Efallai y gallwch brofi eich hunaniaeth mewn ffordd arall gyda GOV.UK One Login. Neu gallwch fynd yn ôl i'r gwasanaeth rydych angen ei ddefnyddio a gwirio a oes ffyrdd eraill o gael mynediad ato.
-  warning: Ni allwch ddychwelyd i'r sgrin hon os ydych yn chwilio am ffordd arall o brofi eich hunaniaeth.
-questionWhatTypeSelfAssessment:
-  title: Pa fath o ffurflen dreth Hunanasesiad a anfonwyd gennych ar gyfer blwyddyn dreth {{ currentYearRangeStart }} i {{ currentYearRangeEnd }}?
-  h1: Pa fath o ffurflen dreth Hunanasesiad a anfonwyd gennych ar gyfer blwyddyn dreth {{ currentYearRangeStart }} i {{ currentYearRangeEnd }}?
-  content:
-    - Mae hyn er mwyn i ni ofyn cwestiynau i chi am y ffurflen gywir.
-    - Byddwch ond wedi anfon ffurflen dreth fer (SA200) os oedd CThEF wedi dweud wrthych am wneud hynny.
-pensions-benefits-self-assessment:
-  title: Rhowch symiau pensiynau a budd-daliadau o'ch Ffurflen dreth Hunanasesiad
-  h1: Rhowch symiau pensiynau a budd-daliadau o'ch Ffurflen dreth Hunanasesiad
-  content:
-    - <div class="govuk-inset-text"><p>I ateb y cwestiwn hwn, defnyddiwch eich Ffurflen dreth Hunanasesiad ar gyfer y naill flwyddyn dreth yma neu'r llall:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}</li></ul></div>
-    - Dywedwch wrthym swm y pensiynau a budd-daliadau rydych yn eu derbyn.
-    - Mae rhifau'r blychau ac enwau ar y dudalen hon yr un fath ag ar eich ffurflen dreth.
-    - Rhowch y symiau mewn punnoedd heb y ceiniog, yn union fel maent yn ymddangos ar eich ffurflen dreth. Os yw'r blwch ar eich ffurflen dreth yn wag, rhowch 0.
-pensions-benefits-short-tax-return:
-  title: Rhowch symiau pensiynau a budd-daliadau o'ch ffurflen dreth fer
-  h1: Rhowch symiau pensiynau a budd-daliadau o'ch ffurflen dreth fer
-  content:
-    - <div class="govuk-inset-text"><p>I ateb y cwestiwn hwn, defnyddiwch eich ffurflen treth fer (SA200) ar gyfer naill flwyddyn dreth yma neu'r llall:</p><ul class="govuk-list govuk-list--bullet"><li>{{ currentYearRangeStart }} i {{ currentYearRangeEnd }}</li><li>{{ previousYearRangeStart }} i {{ previousYearRangeEnd }}</li></ul></div>
-    - Dywedwch wrthym swm y pensiynau a budd-daliadau rydych yn eu derbyn.
-    - Mae rhifau'r blychau ac enwau ar y dudalen hon yr un fath ag ar eich ffurflen dreth.
-    - Rhowch y symiau mewn punnoedd heb y ceiniog, yn union fel maent yn ymddangos ar eich ffurflen dreth. Os yw'r blwch ar eich ffurflen dreth yn wag, rhowch 0.
-tc-amount:
-  title: Rhowch swm taliad credydau treth diweddar
-  h1: Rhowch swm taliad credydau treth diweddar
-  content:
-    - Dywedwch wrthym am daliad credydau treth a gawsoch ar ôl {{ dynamicDate }}.
-    - Byddwch yn cael taliadau credydau treth bob wythnos neu bob 4 wythnos. Dim ond swm un taliad sydd angen i chi ei roi
-questionEnterRecentSelfAssessmentPayment:
-  title: Rhowch y manylion o'ch taliad Hunanasesiad mwyaf diweddar
-  h1: Rhowch y manylion o'ch taliad Hunanasesiad mwyaf diweddar
-  content:
-    - <div class="govuk-inset-text">Gallwch ddefnyddio cyfriflen banc i ateb y cwestiwn hwn.</div>
-    - Dywedwch wrthym y taliad diwethaf a wnaethoch tuag at eich bil treth Hunanasesiad.

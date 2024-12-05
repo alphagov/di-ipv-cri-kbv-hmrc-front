@@ -1,7 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const Controller = require("../../../../../../src/app/kbv/controllers/self-assessment-payment-question");
 const service = require("../../../../../../src/app/kbv/service");
-const constants = require("../../../../../../src/constants/question-keys");
+const { APP } = require("../../../../../../src/lib/config");
 jest.mock("../../../../../../src/app/kbv/service");
 
 describe("self-assessment-payment-question controller", () => {
@@ -39,12 +39,16 @@ describe("self-assessment-payment-question controller", () => {
 
     describe("on API success", () => {
       it("should call answer endpoint to post submitted answer", async () => {
-        const questionKey = constants.SA_PAYMENT_DETAILS;
+        const questionKey = APP.QUESTION_KEYS.SA_PAYMENT_DETAILS;
         req.session.question.questionKey = questionKey;
         req.form.values = {
           selfAssessmentPaymentDate: "2023-02-22",
-          selfAssessmentPaymentAmount: 2000.22,
+          selfAssessmentPaymentAmount: "2000.22",
         };
+        const userInput = JSON.stringify({
+          amount: parseFloat(req.form.values.selfAssessmentPaymentAmount),
+          paymentDate: req.form.values.selfAssessmentPaymentDate,
+        });
         service.getNextQuestion.mockResolvedValue({});
         service.submitAnswer.mockResolvedValue({});
 
@@ -52,17 +56,17 @@ describe("self-assessment-payment-question controller", () => {
 
         expect(service.submitAnswer).toHaveBeenCalledWith(
           req,
-          constants.SA_PAYMENT_DETAILS,
-          JSON.stringify(req.form.values)
+          APP.QUESTION_KEYS.SA_PAYMENT_DETAILS,
+          userInput
         );
         expect(service.submitAnswer).toHaveBeenCalledTimes(1);
       });
 
       it("should call question endpoint to get next question and store it in session", async () => {
-        req.session.question.questionKey = constants.SA_PAYMENT_DETAILS;
+        req.session.question.questionKey = APP.QUESTION_KEYS.SA_PAYMENT_DETAILS;
         req.body.question = "3";
         service.getNextQuestion.mockResolvedValue({
-          data: { questionKey: constants.RTI_P60_PAYMENT_FOR_YEAR },
+          data: { questionKey: APP.QUESTION_KEYS.RTI_P60_PAYMENT_FOR_YEAR },
         });
         service.submitAnswer.mockResolvedValue({});
 
@@ -71,7 +75,7 @@ describe("self-assessment-payment-question controller", () => {
         expect(service.getNextQuestion).toHaveBeenCalledWith(req);
         expect(service.getNextQuestion).toHaveBeenCalledTimes(1);
         expect(req.session.question).toEqual({
-          questionKey: constants.RTI_P60_PAYMENT_FOR_YEAR,
+          questionKey: APP.QUESTION_KEYS.RTI_P60_PAYMENT_FOR_YEAR,
         });
       });
     });

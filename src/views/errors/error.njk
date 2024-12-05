@@ -1,4 +1,20 @@
 <!-- Found in common folder -->
 {% extends "unrecoverable-error.njk" %}
+{% from "components/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
+{% set hmpoPageKey = "error.unrecoverable" %}
 {% set gtmJourney = "kbv-hmrc - unrecoverable" %}
+
+{% block mainContent %}
+  {{ super() }}
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '500',
+    englishPageTitle: hmpoTitle | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'hmrc-kbv',
+    contentId: 'undefined',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
+{% endblock %}

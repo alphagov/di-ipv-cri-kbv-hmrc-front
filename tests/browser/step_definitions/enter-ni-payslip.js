@@ -3,17 +3,17 @@ const { EnterNIPayslipPage } = require("../pages");
 const { expect } = require("chai");
 
 Then("they should see the Enter NI Payslip question page", async function () {
-  const singleAmountQuestionPage = new EnterNIPayslipPage(this.page);
+  const singleInputQuestionPage = new EnterNIPayslipPage(this.page);
 
-  expect(singleAmountQuestionPage.isCurrentPage()).to.be.true;
+  expect(singleInputQuestionPage.isCurrentPage()).to.be.true;
 });
 
 When(
   "they enter amount and continue from the Enter NI Payslip question page",
   async function () {
-    const singleAmountQuestionPage = new EnterNIPayslipPage(this.page);
-    await singleAmountQuestionPage.answer("1234.45");
-    await singleAmountQuestionPage.continue();
+    const singleInputQuestionPage = new EnterNIPayslipPage(this.page);
+    await singleInputQuestionPage.answer("1234.45");
+    await singleInputQuestionPage.continue();
   }
 );
 
