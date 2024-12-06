@@ -58,7 +58,6 @@ Conditions:
     - !Equals [!Ref CodeSigningConfigArn, "none"]
   UseCanaryDeployment: !Not
     - !Equals [!Ref DeploymentStrategy, "None"]
-
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
 Mappings:
